@@ -91,12 +91,10 @@ const Home: React.FC<Props> = ({route}) => {
 
     const gestureHandler = useAnimatedGestureHandler({
         onStart: (event) => {
-            console.log('start')
-            // translateY.value = 0
+            // console.log('start')
         },
         onActive: (event) => {
             // console.log('active',event)
-
             translateY.value = event.translationY
 
 
@@ -105,12 +103,9 @@ const Home: React.FC<Props> = ({route}) => {
             // console.log('end', event.translationY)
             console.log(height)
             if (translateY.value < -height / 2 || event.velocityY < -500) {
-                // translateY.value = withTiming(500, { duration: 30 })
                 translateY.value = withTiming(0, { duration: 60 })
 
             } else if (translateY.value > height || event.velocityY > -500) {
-                // translateY.value = withTiming(0, { duration: 60 })
-                // translateY.value = -height
                 translateY.value = withTiming(400, { duration: 30 })
             }
         },
