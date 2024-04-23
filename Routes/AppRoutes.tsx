@@ -1,9 +1,8 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import Home from '../Page/Home';
-import Menu from '../Page/Menu';
-import Search from '../Page/Search';
-
+import Login from '../Page/Login/Login';
+import Introduce from '../Page/Introduce/Introduce';
+import SignUp from '../Page/SignUp/SignUp';
+import Otp from '../Page/Login/Otp';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,9 +11,12 @@ const AppRouter = () => {
     return (
         <>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="Menu" component={Menu} />
-                <Stack.Screen name="Home" component={Home} />
-                <Stack.Screen name="Search" component={Search} />
+                <Stack.Screen name="Introduce" component={Introduce} />
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="otp" component={Otp} />
+                <Stack.Screen name="signup" component={SignUp} />
+
+
 
 
 
