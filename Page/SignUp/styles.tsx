@@ -3,13 +3,14 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
+        flex : 1
 
     },
     body: {
         margin: 25,
-        gap: 20
+        gap: 20,
+        flex: 1
     },
     text: {
         color: '#000',
@@ -101,6 +102,28 @@ const styles = StyleSheet.create({
         height:'100%',
         padding:20,
         borderWidth: 1
+    },
+    cameraBody : {
+        height:"100%",
+        flexDirection:'column',
+        justifyContent : 'flex-end',
+    },
+    cameraNotify : {
+        height : "50%",
+        backgroundColor :'#fff',
+        borderRadius:20,
+        gap : 20,
+        padding : 30
+        
+    },
+    cameraItem : {
+        height : "40%",
+        justifyContent  : 'space-between',
+        alignItems:'center',
+        flexDirection:'row',
+        padding : 30,
+        backgroundColor :'#000',
+        opacity:0.5,
     }
 
 })
