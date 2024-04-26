@@ -27,6 +27,15 @@ end
 
 target 'WeatherApp' do
   config = use_native_modules!
+  use_frameworks! :linkage => :static
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreExtension', :modular_headers => true
+  pod 'FirebaseInstallations', :modular_headers => true
+  pod 'GoogleDataTransport', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'nanopb', :modular_headers => true
+  $RNFirebaseAsStaticFramework = true
+
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -34,7 +43,7 @@ target 'WeatherApp' do
     #
     # Note that if you have use_frameworks! enabled, Flipper will not work and
     # you should disable the next line.
-    :flipper_configuration => flipper_config,
+    # :flipper_configuration => flipper_config,
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )

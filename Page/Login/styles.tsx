@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        position:'relative'
 
     },
     body: {
@@ -39,6 +40,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row' , 
         justifyContent:'space-between' ,
         marginTop: 30
+    },
+    activity : {
+        position :'absolute',
+        backgroundColor:"#000",
+        height:'100%',
+        width:'100%',
+        opacity:0.7,
     }
 
 })

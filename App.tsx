@@ -21,10 +21,10 @@ import {
 
 
 import { fethData } from './Service/API';
-// import Home from './Page/Home';
-import AppRouter from './Routes/AppRoutes';
 import { NavigationContainer } from '@react-navigation/native';
-
+import LayOut from './Layout/LayOut';
+import { Provider } from 'react-redux';
+import store from './Redux/Store';
 
 
 type SectionProps = PropsWithChildren<{
@@ -37,9 +37,11 @@ function App(): React.JSX.Element {
 
 
   return (
-    <NavigationContainer>
-        <AppRouter/>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <LayOut />
+      </NavigationContainer>
+    </Provider>
 
   );
 }
