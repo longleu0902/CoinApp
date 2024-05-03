@@ -2,9 +2,23 @@ import { useEffect, useRef, useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
 import styles from './styles';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSignUp } from '../../Redux/signUpReducer';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import { uid } from 'uid';
 
 
 const Step8 = (props: any) => {
+    //data redux
+    const dispatch = useDispatch();
+    const dataSignUp: any = useSelector<any>(state => state.sigup.data);
+    console.log(dataSignUp);
+
+
+
+    //camerea
     const { hasPermission, requestPermission } = useCameraPermission();
     const camera = useRef<any>(null);
     const [photo, setPhoto] = useState({})
@@ -12,9 +26,11 @@ const Step8 = (props: any) => {
         physicalDevices: [
             'telephoto-camera',]
     });
-    const [saveImg, setSaveImg] = useState(false)
+    const [saveImg, setSaveImg] = useState(false);
     const [activeCamera, setActiveCamera] = useState(true);
-    const [notify, setNotify] = useState(true)
+    const [notify, setNotify] = useState(true);
+    const [filePhoto, setFilePhoto] = useState({})
+
 
     const handleActiveCamera = () => {
         setActiveCamera(true)
@@ -25,15 +41,34 @@ const Step8 = (props: any) => {
         const file = await camera.current.takePhoto({
             flash: 'on'
         })
-        const result = await fetch(`file://${file.path}`)
-        const data = await result.blob();
         setActiveCamera(false);
-        setSaveImg(true)
-        console.log("check takephoto", data)
+        setSaveImg(true);
+        setFilePhoto(file);
 
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
+        const file: any = { ...filePhoto }
+        const reference = storage().ref(`/images/${uid()}`);
+        const result = await fetch(`file://${file.path}`)
+        const data = await result.blob();
+        try {
+            const putImg = await reference.put(data);
+            const url = await reference.getDownloadURL();
+            await auth().createUserWithEmailAndPassword(dataSignUp.email, dataSignUp.password);
+            await firestore().collection('users').add({
+                firstName: dataSignUp.firstName,
+                lastName: dataSignUp.lastName,
+                phone: dataSignUp.phone,
+                email: dataSignUp.email,
+                address: dataSignUp.address,
+                date: dataSignUp.date,
+                img: url,
+            })
+
+        } catch (err) {
+            console.error(err)
+        }
         props.setStep(9)
 
     }

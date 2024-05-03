@@ -19,6 +19,9 @@ import Animated, { useSharedValue, withSpring, useAnimatedStyle, useAnimatedGest
 import { useEffect, useState } from 'react';
 import React from 'react';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSignUp } from '../../Redux/signUpReducer';
+
 
 interface listNumber {
     id: number,
@@ -27,16 +30,23 @@ interface listNumber {
 }
 
 const Step7 = (props: any) => {
-    const navigate = useNavigation<any>()
+    const navigate = useNavigation<any>();
     const [active, setActiveEmail] = useState(false);
-    const [defaultNumber, setDefaultNumber] = useState('')
+    const [address, setAddress] = useState('');
+    const [notifyAddress, setNotifyAddress] = useState(false)
+    const dataSignUp: any = useSelector<any>(state => state.sigup.data);
     const handleActive = () => {
         setActiveEmail(prev => !prev)
     }
-
-    const [showList, setShowList] = useState(false)
+    const dispatch = useDispatch()
 
     const handleSubmit = () => {
+        if (address == '') {
+            setNotifyAddress(true)
+            return;
+        }
+
+        dispatch(setSignUp({...dataSignUp , address : address}))
         props.setStep(8)
 
     }
@@ -54,10 +64,15 @@ const Step7 = (props: any) => {
                 <Text style={[styles.text, { color: active ? 'blue' : '#000' }]}>Search for Address</Text>
                 <View style={[styles.textInput, { borderColor: active ? '#2752E7' : "#CFCFCF", width: '100%' }]}>
                     <TextInput
+                        value={address}
                         onFocus={handleActive}
-                        placeholder='Your Number Phone'
+                        placeholder='Your Address'
+                        onChangeText={(text) => { setAddress(text), setNotifyAddress(false) }}
                     />
                 </View>
+                {notifyAddress &&
+                    <Text style={[styles.text, { color: 'red' }]}>Enter your address</Text>
+                }
 
                 <View style={{ flexDirection: 'row', gap: 10, borderBottomWidth: 1, borderBottomColor: "#000", paddingVertical: 20, justifyContent: 'space-between' }}>
                     <Text style={[styles.text, { fontWeight: "400" }]}>Enter your address</Text>

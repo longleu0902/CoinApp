@@ -19,6 +19,8 @@ import Animated, { useSharedValue, withSpring, useAnimatedStyle, useAnimatedGest
 import { useEffect, useState } from 'react';
 import React from 'react';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSignUp } from '../../Redux/signUpReducer';
 
 interface listNumber {
     id: number,
@@ -27,9 +29,14 @@ interface listNumber {
 }
 
 const Step4 = (props: any) => {
-    const navigate = useNavigation<any>()
+    const navigate = useNavigation<any>();
     const [active, setActiveEmail] = useState(false);
-    const [defaultNumber, setDefaultNumber] = useState('')
+    const [defaultNumber, setDefaultNumber] = useState('');
+    const [numberPhone, setNumberPhone] = useState('');
+    const [notifyNumber, setNotifyNumber] = useState(false)
+    const dataSignUp: any = useSelector<any>(state => state.sigup.data);
+    const dispatch = useDispatch();
+
     const handleActive = () => {
         setActiveEmail(prev => !prev)
     }
@@ -61,6 +68,11 @@ const Step4 = (props: any) => {
     ];
     const handleSubmit = () => {
         if (props.step == 4) {
+            if (numberPhone == '') {
+                setNotifyNumber(true)
+                return;
+            }
+            dispatch(setSignUp({ ...dataSignUp, phone: defaultNumber + numberPhone }))
             props.setStep(5)
         }
         if (props.step == 5) {
@@ -78,6 +90,7 @@ const Step4 = (props: any) => {
         console.log("cehck item ", item)
         setDefaultNumber(item.number)
     }
+
 
     return (
 
@@ -115,10 +128,16 @@ const Step4 = (props: any) => {
                     <View style={[styles.textInput, { borderColor: active ? '#2752E7' : "#CFCFCF", width: props.step == 4 ? '75%' : '100%' }]}>
                         <TextInput
                             onFocus={handleActive}
+                            keyboardType = "numeric"
+                            onChangeText={(text) => { setNumberPhone(text), setNotifyNumber(false) }}
                             placeholder='Your Number Phone'
+                            value={numberPhone}
                         />
                     </View>
                 </View>
+                {notifyNumber &&
+                    <Text style={[styles.text, { color: 'red' }]}>Please enter your phone number !!</Text>
+                }
                 {showList &&
                     <View style={styles.listNumber}>
                         <ScrollView contentContainerStyle={styles.scroll}>
@@ -141,7 +160,7 @@ const Step4 = (props: any) => {
             </TouchableOpacity>
 
             {props.step == 5 &&
-                <TouchableOpacity onPress={handleSubmit} style={[styles.btn, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#ccc" }]}>
+                <TouchableOpacity style={[styles.btn, { backgroundColor: '#fff', borderWidth: 1, borderColor: "#ccc" }]}>
                     <Text style={[styles.text, { fontSize: 19 }]}>Resend code</Text>
                 </TouchableOpacity>
             }

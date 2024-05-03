@@ -20,10 +20,15 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import styles from './styles';
 import DateTimePicker from 'react-native-ui-datepicker';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSignUp } from '../../Redux/signUpReducer';
 
 
 const Step6 = (props: any) => {
     const navigate = useNavigation<any>();
+    const dataSignUp: any = useSelector<any>(state => state.sigup.data);
+    console.log(dataSignUp)
+    const dispatch = useDispatch();
 
     //Status box
     const [activeFirstName, setActiveFirsName] = useState(false);
@@ -43,6 +48,9 @@ const Step6 = (props: any) => {
     const [lastName, setLastName] = useState('');
     const [valueDate, setValueDate] = useState('');
 
+    //notify
+    const [notifyDate, setNotifyDate] = useState(false);
+
     const handleActiveFirstName = () => {
         setActiveEmail(false);
         setActivePassWord(false);
@@ -61,23 +69,30 @@ const Step6 = (props: any) => {
 
 
     const handleSignIn = () => {
+        if (valueDate == '') {
+            setNotifyDate(true)
+            return;
+        }
         props.setStep(7)
 
     }
 
     const handleChooseDate = () => {
         setShowDate(prev => !prev)
-       const _date = JSON.stringify(date)
-       setValueDate(_date.slice(1 , 11))
+        setNotifyDate(false)
+        const _date = JSON.stringify(date)
+        dispatch(setSignUp({ ...dataSignUp, date: _date.slice(1, 11) }))
+        setValueDate(_date.slice(1, 11))
 
     }
-
 
     return (
         <View style={{ position: 'relative' }}>
             <View style={styles.form}>
                 <Text style={[styles.text, { fontSize: 22 }]}>Enter your personal information</Text>
-                <Text style={[styles.text, { fontSize: 16, color: activeFirstName ? "#2752E7" : "#000" }]}>Legal first name</Text>
+                <Text style={[styles.text, { fontSize: 16, color: activeFirstName ? "#2752E7" : "#000" }]}>Legal first name
+                    <Text style={{ fontSize: 13, color: '#ccc' }}> (optional) </Text>
+                </Text>
                 <View style={[styles.textInput, { borderColor: activeFirstName ? '#2752E7' : "#CFCFCF" }]}>
                     <TextInput
                         value={firstName}
@@ -86,7 +101,9 @@ const Step6 = (props: any) => {
                         onChangeText={(text) => setFirstName(text)}
                     />
                 </View>
-                <Text style={[styles.text, { fontSize: 16, color: activeLastName ? "#2752E7" : "#000" }]}>Legal last name</Text>
+                <Text style={[styles.text, { fontSize: 16, color: activeLastName ? "#2752E7" : "#000" }]}>Legal last name
+                    <Text style={{ fontSize: 13, color: '#ccc' }}> (optional) </Text>
+                </Text>
                 <View style={[styles.textInput, { borderColor: activeLastName ? '#2752E7' : "#CFCFCF" }]}>
                     <TextInput
                         value={lastName}
@@ -104,9 +121,12 @@ const Step6 = (props: any) => {
                     <TextInput
                         value={valueDate}
                         placeholder='Date'
-                        editable={false} 
+                        editable={false}
                     />
                 </TouchableOpacity>
+                {notifyDate &&
+                    <Text style={[styles.text, { color: 'red' }]}>Plesea choose your birthday !</Text>
+                }
                 <Text style={[styles.text, { fontSize: 16, color: '#707070' }]}>
                     We use 128-bit encryption for added security, and this information is only used for identity verification purposes
                 </Text>
@@ -119,17 +139,17 @@ const Step6 = (props: any) => {
             </TouchableOpacity>
             {showDate &&
                 <View style={styles.date}>
-                    <View style={{flex : 12}}>
+                    <View style={{ flex: 12 }}>
                         <DateTimePicker
                             mode="single"
                             date={date}
-                            onChange={(params: any) => setDate(params.date)}
+                            onChange={(params: any) => {setDate(params.date)}}
                             selectedItemColor='#000'
                         />
                     </View>
 
-                    <TouchableOpacity style={[styles.btn, { flex: 1 , marginBottom : 30, backgroundColor:"#000" }]} onPress={handleChooseDate}>
-                        <Text style={[styles.text, {color:'#fff'}]}>OK</Text>
+                    <TouchableOpacity style={[styles.btn, { flex: 1, marginBottom: 30, backgroundColor: "#000" }]} onPress={handleChooseDate}>
+                        <Text style={[styles.text, { color: '#fff' }]}>OK</Text>
                     </TouchableOpacity>
 
                 </View>

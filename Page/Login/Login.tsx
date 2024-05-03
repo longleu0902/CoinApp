@@ -67,7 +67,7 @@ const Login = () => {
             setLoading(true)
             const resAuth = await auth().signInWithEmailAndPassword(email, password)
             const usersCollection = firestore().collection('users');
-            const querySnapshot = await usersCollection.where("username".toLowerCase(), "==", email.toLowerCase()).get();
+            const querySnapshot = await usersCollection.where("email".toLocaleLowerCase(), "==", email).get();
             const data: any[] = [];
             querySnapshot.forEach((doc) => {
                 data.push({ id: doc.id, ...doc.data() });
@@ -110,7 +110,7 @@ const Login = () => {
                                 value={email}
                                 onFocus={handleActiveEmail}
                                 placeholder='Email or phone number'
-                                onChangeText={(text) => setEmail(text)}
+                                onChangeText={(text) => {setEmail(text) , setToast(false)}}
                             />
                         </View>
                         {((email.length > 5 && validateEmail(email) == false) || toast) &&
@@ -125,7 +125,7 @@ const Login = () => {
                                 placeholder='Password'
                                 secureTextEntry={showPassword ? true : false}
                                 style={{ width: '90%' }}
-                                onChangeText={(text) => setPassword(text)}
+                                onChangeText={(text) => {setPassword(text), setToastPhone(false)}}
 
                             />
                             <TouchableOpacity onPress={() => setShowPassword(prev => !prev)}>

@@ -49,7 +49,7 @@ const Otp = ({ route }: any) => {
         if (code.length < 0) return
         setLoading(true)
         const payload = {
-            username: data[0].username,
+            username: data[0].email,
             token: '',
             isAuthentication: true,
             phone: data[0].phone
@@ -73,7 +73,7 @@ const Otp = ({ route }: any) => {
                         <Image source={require("../../img/Arrow_left.png")} />
                     </TouchableOpacity>
                     <View style={styles.form}>
-                        <Text style={[styles.text, { fontSize: 22 }]}>Enter the 7-digit code we texted to +xx xxxx xx{data[0].phone.slice(7, 10)}</Text>
+                        <Text style={[styles.text, { fontSize: 22 }]}>Enter the 7-digit code we texted to +xx xxxx xx{data[0].phone.slice(-3)}</Text>
                         <Text style={[styles.text, { fontSize: 16, color: "#707070" }]}>This extra step shows it’s really you trying to sign in</Text>
                         <View style={[styles.textInput, { borderColor: active ? '#2752E7' : "#CFCFCF" }]}>
                             <TextInput
