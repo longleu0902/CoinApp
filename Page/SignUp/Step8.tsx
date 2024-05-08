@@ -48,11 +48,11 @@ const Step8 = (props: any) => {
     }
 
     const handleSave = async () => {
-        const file: any = { ...filePhoto }
-        const reference = storage().ref(`/images/${uid()}`);
-        const result = await fetch(`file://${file.path}`)
-        const data = await result.blob();
         try {
+            const file: any = { ...filePhoto }
+            const reference = storage().ref(`/images/${uid()}`);
+            const result = await fetch(`file://${file.path}`)
+            const data = await result.blob();
             const putImg = await reference.put(data);
             const url = await reference.getDownloadURL();
             await auth().createUserWithEmailAndPassword(dataSignUp.email, dataSignUp.password);
@@ -135,6 +135,7 @@ const Step8 = (props: any) => {
                             <Image source={require("../../img/Camera.png")} />
                         }
                     </TouchableOpacity>
+                    <View style={styles.borderCamera}></View>
 
                 </View>
 

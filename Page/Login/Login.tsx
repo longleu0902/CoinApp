@@ -77,11 +77,6 @@ const Login = () => {
                 navigate.navigate("otp", { resAuth : resAuth, data: data })
                 setLoading(false)
             }
-       
-
-
-
-
         } catch (err) {
             setLoading(false)
             console.log(err)
@@ -90,10 +85,6 @@ const Login = () => {
 
 
     }
-
-
-
-
 
     return (
         <>

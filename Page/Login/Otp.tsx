@@ -52,9 +52,12 @@ const Otp = ({ route }: any) => {
             username: data[0].email,
             token: '',
             isAuthentication: true,
-            phone: data[0].phone
+            phone: data[0].phone,
+            firstname : data[0].firstName,
+            lastname : data[0].lastName
 
         }
+        console.log("check pay load " , payload)
 
         dispath(setLogin(payload))
 
