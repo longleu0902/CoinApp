@@ -2,19 +2,33 @@ import { Button, FlatList, Image, SafeAreaView, ScrollView, Text, TouchableHighl
 import styles from "./styles";
 import { BarChart, LineChart, LineChartBicolor, PieChart, PopulationPyramid } from "react-native-gifted-charts";
 import { LinearGradient, Stop } from "react-native-svg";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import TopMovers from "./TopMovers";
 import BlockChanis from "./BlockChanis";
 import CryPto from "./CrypPto";
 import News from "./New";
+import { useCallback, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 
 
 const Home = () => {
+    const resetScrollView = useSelector<any>(state => state.scrollView.render)
     const navigate = useNavigation<any>();
+    const scrollViewRef = useRef<ScrollView>(null);
+    const scrollToTop = () => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true }) ?? null;
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            scrollToTop()
+        },[resetScrollView])
+    )
+
 
     return (
         <SafeAreaView style={styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
+            <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false} contentContainerStyle={styles.content}>
                 {/* item */}
                 <View style={styles.addPayment}>
                     <Image source={require('../../img/wallet.png')} />

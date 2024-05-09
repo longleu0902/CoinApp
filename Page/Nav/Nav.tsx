@@ -1,7 +1,13 @@
-import { Text, TouchableOpacity, View, Image } from "react-native";
+import { Text, TouchableOpacity, View, Image, useWindowDimensions } from "react-native";
 import styles from "../Nav/styles";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { PanGestureHandler, GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
+import Animated, { useSharedValue, withSpring, useAnimatedStyle, useAnimatedGestureHandler, withTiming, Easing } from 'react-native-reanimated';
+import Spend from "./Spend";
+import { uid } from "uid";
+import { setRender } from "../../Redux/scrollViewReducer";
+import { useDispatch } from "react-redux";
 
 interface nav {
     id: number,
@@ -11,7 +17,9 @@ interface nav {
     active: boolean,
 }
 const Nav = () => {
-    const navigate = useNavigation<any>()
+    const dispath = useDispatch();
+    const navigate = useNavigation<any>();
+    const translateY = useSharedValue(700);
     const defaultItem = [
         {
             id: 1,
@@ -57,47 +65,124 @@ const Nav = () => {
         setRenderItem(_renderItem)
         switch (id) {
             case 1:
-                navigate.navigate("Home")
+                navigate.navigate("Home");
+                translateY.value = withTiming(700, { duration: 30 })
                 break;
             case 2:
                 navigate.navigate("Prortfolio")
+                translateY.value = withTiming(700, { duration: 30 })
+                break;
+            case 3:
+                translateY.value = withSpring(0, { duration: 30 })
                 break;
             case 5:
                 navigate.navigate("SignOut");
+                translateY.value = withTiming(700, { duration: 30 })
                 break;
             default:
                 navigate.navigate("Home")
         }
 
     }
-    useEffect(()=> {
+
+    const [lastPress, setLastPress] = useState(0);
+    const handleDoubleClick = (id: number) => {
+        const currentTime = new Date().getTime();
+        const doublePressDelay = 300; // Khoảng thời gian cho phép giữa hai lần click
+
+        if (currentTime - lastPress < doublePressDelay) {
+            // Xử lý sự kiện double click ở đây
+            const render = uid();
+            dispath(setRender(render))
+            switch (id) {
+                case 1:
+                    navigate.navigate("Home");
+                    translateY.value = withTiming(700, { duration: 30 })
+                    break;
+                case 2:
+                    navigate.navigate("Prortfolio")
+                    translateY.value = withTiming(700, { duration: 30 })
+                    break;
+                case 3:
+                    translateY.value = withSpring(0, { duration: 30 })
+                    break;
+                case 5:
+                    navigate.navigate("SignOut");
+                    translateY.value = withTiming(700, { duration: 30 })
+                    break;
+                default:
+                    navigate.navigate("Home")
+            }
+        }
+        setLastPress(currentTime);
+    }
+
+    useEffect(() => {
         handleClick(1)
-    },[])
+    }, []);
+
+    const { height } = useWindowDimensions()
+    const gestureHandler = useAnimatedGestureHandler({
+        onStart: (event) => {
+            // console.log('start')
+        },
+        onActive: (event) => {
+            // console.log('active',event)
+            translateY.value = event.translationY
+
+
+        },
+        onEnd: (event) => {
+            // console.log('end', event.translationY)
+            console.log(height)
+            if (translateY.value < -height / 2 || event.velocityY < 0) {
+                translateY.value = withTiming(0, { duration: 60 })
+
+            } else if (translateY.value > height || event.velocityY > -500) {
+                translateY.value = withTiming(700, { duration: 30 })
+            }
+            // translateY.value = withTiming(0, { duration: 30 })
+        },
+    });
+    const animatedStyles = useAnimatedStyle(() => ({
+        transform: [{ translateY: withTiming(translateY.value, { duration: 250, easing: Easing.linear }) }],
+    }));
 
     return (
-        <View style={styles.container}>
-            {renderItem.map((item: nav, index: number) => (
-                <View key={index} style={styles.item}>
-                    <TouchableOpacity
-                        onPress={() => handleClick(item.id)}
-                        style={[styles.btn,
-                        {
-                            backgroundColor: item.id == 3 ? "#2752E7" : "#FFF",
-                            padding: item.id == 3 ? 30 : 0
-                        }
-                        ]}>
-                        {item.active ? (
-                            <Image source={item.imgActive} />
-                        ) : (
-                            <Image source={item.img} />
-                        )}
-                    </TouchableOpacity>
-                    {item.id !== 3 && <Text style={[styles.text, { color: item.active == true ? "blue" : '#707070' }]}>{item.name}</Text>}
+        <GestureHandlerRootView >
+            <View style={styles.container}>
+                {renderItem.map((item: nav, index: number) => (
+                    <View key={index} style={styles.item}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                handleClick(item.id)
+                                handleDoubleClick(item.id)
+                            }}
+                            style={[styles.btn,
+                            {
+                                backgroundColor: item.id == 3 ? "#2752E7" : "#FFF",
+                                padding: item.id == 3 ? 30 : 0
+                            }
+                            ]}>
+                            {item.active ? (
+                                <Image source={item.imgActive} />
+                            ) : (
+                                <Image source={item.img} />
+                            )}
+                        </TouchableOpacity>
+                        {item.id !== 3 && <Text style={[styles.text, { color: item.active == true ? "blue" : '#707070' }]}>{item.name}</Text>}
 
-                </View>
-            ))}
+                    </View>
+                ))}
+            </View>
+            <PanGestureHandler onGestureEvent={gestureHandler} >
+                <Animated.View style={[styles.spend, animatedStyles]}>
+                    <Spend />
+                </Animated.View>
+            </PanGestureHandler>
 
-        </View>
+        </GestureHandlerRootView>
+
     )
 }
 

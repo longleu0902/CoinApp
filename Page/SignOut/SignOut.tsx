@@ -1,8 +1,9 @@
 import { Image, SafeAreaView, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 import styles from "./styles";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogin } from "../../Redux/loginReducer";
+import { useFocusEffect } from "@react-navigation/native";
 
 const SignOut = () => {
     const dispath = useDispatch()
@@ -54,9 +55,25 @@ const SignOut = () => {
         dispath(setLogin(payload))
     }
 
+    //srollOnTop after render
+    const scrollViewRef = useRef<ScrollView>(null);
+    const resetScrollView = useSelector<any>(state => state.scrollView.render)
+
+
+    const scrollToTop = () => {
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true }) ?? null;
+    };
+
+
+    useFocusEffect(
+        useCallback(() => {
+            scrollToTop()
+        }, [resetScrollView])
+    )
+
     return (
         <SafeAreaView>
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>
 
                 {/*  username and email  */}
                 <Text style={styles.text}>{user.username}</Text>
