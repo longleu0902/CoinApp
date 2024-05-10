@@ -22,7 +22,7 @@ const Home = () => {
     useFocusEffect(
         useCallback(() => {
             scrollToTop()
-        },[resetScrollView])
+        }, [resetScrollView])
     )
 
 
@@ -36,7 +36,7 @@ const Home = () => {
                         <Text style={styles.title}>Welcome to Coinbase!</Text>
                         <Text style={styles.text}>Make your first investment today</Text>
                     </View>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity onPress={() => navigate.navigate("Payment")} style={styles.btn}>
                         <Text style={[styles.text, { color: '#fff', fontWeight: '600' }]}>Add payment method</Text>
                     </TouchableOpacity>
                 </View>
@@ -114,8 +114,6 @@ const Home = () => {
                     </View>
                     <News />
                 </View>
-
-
 
             </ScrollView>
 

@@ -210,11 +210,6 @@ const Step1 = (props: any) => {
 
     }
 
-// test 
-
-// const reference = storage().ref()
-// console.log("check refrecence", reference)
-
 
 
     return (
