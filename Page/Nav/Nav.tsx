@@ -75,6 +75,10 @@ const Nav = () => {
             case 3:
                 translateY.value = withSpring(0, { duration: 30 })
                 break;
+            case 4:
+                navigate.navigate("Prices")
+                translateY.value = withTiming(700, { duration: 30 })
+                break;
             case 5:
                 navigate.navigate("SignOut");
                 translateY.value = withTiming(700, { duration: 30 })
@@ -105,6 +109,10 @@ const Nav = () => {
                     break;
                 case 3:
                     translateY.value = withSpring(0, { duration: 30 })
+                    break;
+                case 4:
+                    navigate.navigate("Prices")
+                    translateY.value = withTiming(700, { duration: 30 })
                     break;
                 case 5:
                     navigate.navigate("SignOut");

@@ -151,15 +151,6 @@ const Signup = () => {
                 {step == 8 && <Step8 step={step} setStep={setStep} />}
                 {step == 9 && <Step9 step={step} setStep={setStep} />}
 
-
-
-
-
-
-
-
-
-
             </View>
 
         </SafeAreaView>

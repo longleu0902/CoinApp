@@ -4,6 +4,7 @@ import Prortfolio from '../Page/Prortfolio/Prortfolio';
 import ListBitcoin from '../Page/Home/ListBitcoin';
 import SignOut from '../Page/SignOut/SignOut';
 import Payment from '../Page/Payment/Payment';
+import Prices from '../Page/Prices/Prices';
 const Stack = createNativeStackNavigator();
 
 const AppRouter = () => {
@@ -16,10 +17,7 @@ const AppRouter = () => {
                 <Stack.Screen name="ListBitcoin" component={ListBitcoin} />
                 <Stack.Screen name="SignOut" component={SignOut} />
                 <Stack.Screen name="Payment" component={Payment} />
-
-
-
-
+                <Stack.Screen name="Prices" component={Prices} />
                 {/* <Stack.Screen
                     options={{ headerShown: true }}
                     name="ChangePassword" component={ChangePassword} /> */}
