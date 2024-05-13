@@ -36,7 +36,7 @@ const AllAssets = () => {
         return roundedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
     useEffect(() => {
-        // getData();
+        getData();
     }, [])
 
     const url = (id: number) => {
