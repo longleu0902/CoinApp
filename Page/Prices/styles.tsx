@@ -32,18 +32,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    itemleft: {
-        flexDirection: 'row',
-        gap: 20,
-        alignItems: 'center'
-
-    },
-    itemLeftInfo: {
-
-    },
-    itemRight: {
-        alignItems: 'flex-end'
-    },
     active: {
         marginTop: 100,
     }

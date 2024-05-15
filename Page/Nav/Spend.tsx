@@ -1,6 +1,10 @@
+import { useNavigation } from "@react-navigation/native";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { withTiming } from "react-native-reanimated";
 
-const Spend = () => {
+const Spend = (props: any) => {
+    const { translateY } = props
+    const navigate = useNavigation<any>()
     const renderList = [
         {
             id: 1,
@@ -33,6 +37,27 @@ const Spend = () => {
 
         },
     ]
+
+    const handleClick = (id: number) => {
+        switch (id) {
+            case 1:
+                navigate.navigate("Buy");
+                translateY.value = withTiming(700, { duration: 30 })
+                break;
+            case 2:
+                navigate.navigate("");
+                break;
+            case 3:
+                navigate.navigate("");
+                break;
+            case 4:
+                navigate.navigate("");
+                break;
+            case 5:
+                navigate.navigate("");
+                break;
+        }
+    }
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -40,7 +65,7 @@ const Spend = () => {
             </View>
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.list}>
                 {renderList.map((item, index) => (
-                    <TouchableOpacity key={index} style={{ flexDirection: "row", alignItems: "center", gap: 30 }}>
+                    <TouchableOpacity onPress={() => handleClick(item.id)} key={index} style={{ flexDirection: "row", alignItems: "center", gap: 30 }}>
                         <Text style={styles.icon}>+</Text>
                         <View style={{ gap: 3 }}>
                             <Text style={{ fontSize: 16, fontWeight: "700" }}>{item.type}</Text>

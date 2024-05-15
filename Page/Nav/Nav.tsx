@@ -185,7 +185,7 @@ const Nav = () => {
             </View>
             <PanGestureHandler onGestureEvent={gestureHandler} >
                 <Animated.View style={[styles.spend, animatedStyles]}>
-                    <Spend />
+                    <Spend translateY={translateY} />
                 </Animated.View>
             </PanGestureHandler>
 

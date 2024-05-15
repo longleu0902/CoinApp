@@ -1,7 +1,7 @@
 import { SafeAreaView, Text, ScrollView, View, Image, TouchableOpacity } from "react-native"
 import styles from "./styles"
 import { useEffect, useState } from "react"
-import Search from "./Search"
+import Search from "../Search/Search"
 import PriceList from "./PriceList"
 
 
@@ -52,7 +52,7 @@ const Prices = () => {
                     <View style={styles.header}>
                         <View style={styles.title}>
                             <Text style={[styles.textContent, { color: "#707070" }]}>In the past 24 hours</Text>
-                            <Text style={{ fontSize: 24, fontWeight: '800' }}>Market it up <Text style={{ color: percentTotal > 0 ? "green" : "red" }}>{percentTotal > 0 ? "+" : ""}{percentTotal.toFixed(2)}%</Text></Text>
+                            <Text style={{ fontSize: 24, fontWeight: '800' }}>Market it up <Text style={{ color: percentTotal >= 0 ? "green" : "red" }}>{percentTotal >= 0 ? "+" : ""}{percentTotal.toFixed(2)}%</Text></Text>
                         </View>
                         <TouchableOpacity onPress={() => setShowSearch(true)} style={styles.search}>
                             <Image source={require("../../img/Search.png")} />
