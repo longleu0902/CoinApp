@@ -46,15 +46,19 @@ const Spend = (props: any) => {
                 break;
             case 2:
                 navigate.navigate("");
+                translateY.value = withTiming(700, { duration: 30 })
                 break;
             case 3:
-                navigate.navigate("");
+                navigate.navigate("ConvertCoin");
+                translateY.value = withTiming(700, { duration: 30 })
                 break;
             case 4:
                 navigate.navigate("");
+                translateY.value = withTiming(700, { duration: 30 })
                 break;
             case 5:
                 navigate.navigate("");
+                translateY.value = withTiming(700, { duration: 30 })
                 break;
         }
     }
