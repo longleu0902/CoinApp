@@ -12,7 +12,7 @@ interface URL {
 
 
 const CoinList = (props: any) => {
-    const { list, urlIcon, keyWord } = props;
+    const { list, urlIcon, keyWord, Screen } = props;
     const navigate = useNavigation<any>()
 
     const formatNumberWithCommas = (number: number) => {
@@ -26,13 +26,23 @@ const CoinList = (props: any) => {
         return filterIcon[0]?.url
     }
 
-    const moveDetail = (name: string, symbol: string, price: number, percent: number) => {
-        navigate.navigate("CoinDetail", { data : {
-            name : name ,
-            symbol : symbol,
-            price : price,
-            percent : percent
-        } })
+    const moveDetail = (amount: number, name: string, symbol: string, price: number, percent1h: number, percent24h: number, percent7d: number, percent30d: number, percent60d: number, percent90d: number) => {
+        navigate.navigate("CoinDetail", {
+            data: {
+                amount: amount,
+                name: name,
+                symbol: symbol,
+                price: price,
+                percent1h: percent1h,
+                percent24h: percent24h,
+                percent7d: percent7d,
+                percent30d: percent30d,
+                percent60d: percent60d,
+                percent90d: percent90d
+            },
+            Screen: Screen
+        }
+        )
     }
 
     return (
@@ -41,10 +51,16 @@ const CoinList = (props: any) => {
                 return (
                     <TouchableOpacity
                         onPress={() => moveDetail(
+                            item.circulating_supply,
                             item.name,
                             item.symbol,
                             item["quote"]["USD"]["price"],
                             item["quote"]["USD"]["percent_change_1h"],
+                            item["quote"]["USD"]["percent_change_24h"],
+                            item["quote"]["USD"]["percent_change_7d"],
+                            item["quote"]["USD"]["percent_change_30d"],
+                            item["quote"]["USD"]["percent_change_60d"],
+                            item["quote"]["USD"]["percent_change_90d"],
                         )
                         }
                         key={index}

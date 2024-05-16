@@ -12,6 +12,7 @@ interface URL {
 
 
 const PriceList = (props: any) => {
+    const Screen = "Prices"
     const { keyWord, setPercentTotal, option } = props;
     const [list, setList] = useState<any>([]);
     const [defaultList, setDefaultList] = useState<any>([])
@@ -41,7 +42,7 @@ const PriceList = (props: any) => {
 
     }
 
-    
+
     const handleChangeList = () => {
         const _defaultList = [...defaultList]
         switch (option) {
@@ -83,7 +84,7 @@ const PriceList = (props: any) => {
                     <ActivityIndicator size="large" />
                 </View>
             ) : (
-                <CoinList list={list} urlIcon={urlIcon} keyWord={keyWord} />
+                <CoinList list={list} urlIcon={urlIcon} keyWord={keyWord} Screen={Screen} />
             )}
         </>
 

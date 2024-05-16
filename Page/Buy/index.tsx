@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 
 
 const Buy = () => {
+    const Screen = "Buy"
     const navigate = useNavigation<any>()
     const [keyWord, setKeyWord] = useState('')
     const [list, setList] = useState<any>([]);
@@ -30,7 +31,7 @@ const Buy = () => {
     }
 
     useEffect(() => {
-        // getData();
+        getData();
     }, [])
     return (
         <SafeAreaView style={styles.container}>
@@ -46,7 +47,7 @@ const Buy = () => {
                 {!loading ? (
                     <ActivityIndicator style={{ marginTop: 100 }} />
                 ) : (
-                    <CoinList list={list} urlIcon={urlIcon} keyWord={keyWord} />
+                    <CoinList list={list} urlIcon={urlIcon} keyWord={keyWord} Screen={Screen} />
                 )}
             </ScrollView>
 
