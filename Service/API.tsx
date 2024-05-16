@@ -30,4 +30,22 @@ const fethDataCoinIcon = async (id : number) => {
         console.error(err)
     }
 }
-export { fethDataCoin , fethDataCoinIcon }
+
+const getDataCoin = async (symbol : string) => {
+    try {
+        const data = await axios.get(`https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}`, {
+            headers: {
+                'X-CMC_PRO_API_KEY': "ef557797-9503-4f8e-b369-6b5efc8a02ae",
+            }
+        })
+        // console.log("check api", data.data.data[`${symbol}`]["quote"]["USD"]["price"])
+
+        return {
+            id : data.data.data[`${symbol}`]["id"],
+            price : data.data.data[`${symbol}`]["quote"]["USD"]["price"]
+        }
+    } catch (err) {
+        console.error(err)
+    }
+}
+export { fethDataCoin , fethDataCoinIcon , getDataCoin}
