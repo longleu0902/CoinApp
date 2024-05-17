@@ -115,6 +115,8 @@ const Home = () => {
                     <News />
                 </View>
 
+
+
             </ScrollView>
 
         </SafeAreaView>

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     number: {
         alignItems: "center",
         justifyContent: 'center',
-        height: 200
+        height: 150
     },
     boxChange: {
         borderWidth: 1,

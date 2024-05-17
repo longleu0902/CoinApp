@@ -8,6 +8,7 @@ import Prices from '../Page/Prices/Prices';
 import Buy from '../Page/Buy';
 import CoinDetail from '../Page/CoinDetail';
 import ConvertCoin from '../Page/ConvertCoin';
+import Receive from '../Page/Receive';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,7 +26,7 @@ const AppRouter = () => {
                 <Stack.Screen name="Buy" component={Buy} />
                 <Stack.Screen name="CoinDetail" component={CoinDetail} />
                 <Stack.Screen name="ConvertCoin" component={ConvertCoin} />
-
+                <Stack.Screen name="Receive" component={Receive} />
 
                 {/* <Stack.Screen
                     options={{ headerShown: true }}

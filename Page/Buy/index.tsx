@@ -4,6 +4,7 @@ import CoinList from "../CoinList";
 import { useEffect, useState } from "react";
 import { fethDataCoin, fethDataCoinIcon } from "../../Service/API";
 import { useNavigation } from "@react-navigation/native";
+import Header from "../Header";
 
 
 
@@ -35,14 +36,7 @@ const Buy = () => {
     }, [])
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigate.navigate("Home")} style={{ width: "5%" }}>
-                    <Image source={require("../../img/Close.png")} />
-                </TouchableOpacity>
-                <View style={{ width: "95%", alignItems: "center" }}>
-                    <Text style={styles.text}>Select asssets to Buy</Text>
-                </View>
-            </View>
+            <Header title={"Select assets to Buy"} navigateScreen={"Home"} Icon={require("../../img/Close.png")} />
             <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ gap: 30 }}>
                 {!loading ? (
                     <ActivityIndicator style={{ marginTop: 100 }} />

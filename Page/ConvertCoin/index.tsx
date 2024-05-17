@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { getDataCoin, fethDataCoin, fethDataCoinIcon } from "../../Service/API";
 import SelectCoin from "../SelectCoin";
+import Header from "../Header";
 const ConvertCoin = () => {
     const navigate = useNavigation<any>();
 
@@ -165,14 +166,7 @@ const ConvertCoin = () => {
     return (
         <View style={styles.content}>
             <View style={styles.container}>
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={() => navigate.navigate("Home")} style={{ width: "5%" }}>
-                        <Image source={require("../../img/Arrow_left.png")} />
-                    </TouchableOpacity>
-                    <View style={{ width: "95%", alignItems: "center" }}>
-                        <Text style={styles.text}>Convert Bitcoin</Text>
-                    </View>
-                </View>
+                <Header title={"Convert Bitcoin"} navigateScreen={"Home"} Icon={require("../../img/Arrow_left.png")} />
                 <View style={styles.number}>
                     {!showConvert &&
                         <Text style={[styles.text, { color: "#2752E7", fontSize: 50 }]}>${formatNumberWithCommas(Number(number))}</Text>
@@ -190,26 +184,24 @@ const ConvertCoin = () => {
 
 
                 </View>
-                <View style={styles.boxChange}>
-                    {changeCoin.map((item: any, index: number) => (
-                        <>
-                            <Image style={{ width: 35, height: 35 }} source={{ uri: item.img1 }} />
-                            <TouchableOpacity onPress={() => handleChooseCoin("From")} style={{ gap: 2 }}>
-                                <Text style={[styles.text, { fontWeight: '400', fontSize: 14, color: "#707070" }]}>From</Text>
-                                <Text style={[styles.text, { fontWeight: '400', fontSize: 14 }]}>{item.symbol1}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => hanldeSwap()} style={styles.btnChange}>
-                                <Image source={require("../../img/Sort_arrow-2.png")} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handleChooseCoin("To")} style={{ gap: 2 }}>
-                                <Text style={[styles.text, { fontWeight: '400', fontSize: 14, color: "#707070" }]}>To</Text>
-                                <Text style={[styles.text, { fontWeight: '400', fontSize: 14 }]}>{item.symbol2}</Text>
-                            </TouchableOpacity>
-                            <Image style={{ width: 35, height: 35 }} source={{ uri: item.img2 }} />
-                        </>
+                {changeCoin.map((item: any, index: number) => (
+                    <View key={index} style={styles.boxChange}>
+                        <Image style={{ width: 35, height: 35 }} source={{ uri: item.img1 }} />
+                        <TouchableOpacity onPress={() => handleChooseCoin("From")} style={{ gap: 2 }}>
+                            <Text style={[styles.text, { fontWeight: '400', fontSize: 14, color: "#707070" }]}>From</Text>
+                            <Text style={[styles.text, { fontWeight: '400', fontSize: 14 }]}>{item.symbol1}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => hanldeSwap()} style={styles.btnChange}>
+                            <Image source={require("../../img/Sort_arrow-2.png")} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleChooseCoin("To")} style={{ gap: 2 }}>
+                            <Text style={[styles.text, { fontWeight: '400', fontSize: 14, color: "#707070" }]}>To</Text>
+                            <Text style={[styles.text, { fontWeight: '400', fontSize: 14 }]}>{item.symbol2}</Text>
+                        </TouchableOpacity>
+                        <Image style={{ width: 35, height: 35 }} source={{ uri: item.img2 }} />
+                    </View>
 
-                    ))}
-                </View>
+                ))}
                 <View style={styles.keyboad}>
                     {defaultKeyBoard.map((item: any, index: number) => {
                         return (

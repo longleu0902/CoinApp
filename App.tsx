@@ -20,11 +20,11 @@ import {
 } from 'react-native';
 
 
-import { fethData } from './Service/API';
 import { NavigationContainer } from '@react-navigation/native';
 import LayOut from './Layout/LayOut';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 type SectionProps = PropsWithChildren<{
@@ -37,11 +37,14 @@ function App(): React.JSX.Element {
 
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <LayOut />
-      </NavigationContainer>
-    </Provider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Provider store={store}>
+        <NavigationContainer>
+          <LayOut />
+        </NavigationContainer>
+      </Provider>
+    </GestureHandlerRootView>
+
 
   );
 }

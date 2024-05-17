@@ -157,7 +157,7 @@ const Nav = () => {
     }));
 
     return (
-        <GestureHandlerRootView >
+        <>
             <View style={styles.container}>
                 {renderItem.map((item: nav, index: number) => (
                     <View key={index} style={styles.item}>
@@ -188,9 +188,7 @@ const Nav = () => {
                     <Spend translateY={translateY} />
                 </Animated.View>
             </PanGestureHandler>
-
-        </GestureHandlerRootView>
-
+        </>
     )
 }
 

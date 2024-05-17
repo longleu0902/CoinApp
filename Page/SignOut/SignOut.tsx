@@ -71,6 +71,7 @@ const SignOut = () => {
         }, [resetScrollView])
     )
 
+
     return (
         <SafeAreaView>
             <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false} contentContainerStyle={styles.container}>

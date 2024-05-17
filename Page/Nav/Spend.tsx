@@ -57,7 +57,7 @@ const Spend = (props: any) => {
                 translateY.value = withTiming(700, { duration: 30 })
                 break;
             case 5:
-                navigate.navigate("");
+                navigate.navigate("Receive");
                 translateY.value = withTiming(700, { duration: 30 })
                 break;
         }
