@@ -1,67 +1,74 @@
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native"
+import { FlatList, Image, Text, TouchableOpacity, View, ActivityIndicator } from "react-native"
 import styles from "./styles";
-interface renderData {
-    id: string,
-    title: string,
-    price: string,
-    percent: string,
-    img: any
+import { useNavigation } from "@react-navigation/native";
 
-}
-const TopMovers = () => {
-    const data: renderData[] = [
-        {
-            id: "1",
-            title: "KNC",
-            price: "$2,66",
-            percent: "+22,37",
-            img: require('../../img/KNCL.png')
 
-        },
-        {
-            id: "2",
-            title: "ATOM",
-            price: "$16,39",
-            percent: "+16,07",
-            img: require('../../img/ATOM.png')
+const TopMovers = (props: any) => {
 
-        },
-        {
-            id: "3",
-            title: "CRV",
-            price: "$10,39",
-            percent: "+12,07",
-            img: require('../../img/aCRV.png')
+    const { list, url, formatNumberWithCommas } = props
+    const navigate = useNavigation<any>();
+    const Screen = "Home"
 
-        },
-    ];
-    const handleClickTopMovers = (id: string) => {
-        console.log("check id", id)
+
+
+    const moveDetail = (amount: number, name: string, symbol: string, price: number, percent1h: number, percent24h: number, percent7d: number, percent30d: number, percent60d: number, percent90d: number) => {
+        navigate.navigate("CoinDetail", {
+            data: {
+                amount: amount,
+                name: name,
+                symbol: symbol,
+                price: price,
+                percent1h: percent1h,
+                percent24h: percent24h,
+                percent7d: percent7d,
+                percent30d: percent30d,
+                percent60d: percent60d,
+                percent90d: percent90d
+            },
+            Screen: Screen
+        }
+        )
     }
 
-    const renderItem = ({ item }: { item: renderData }) => (
+
+    const renderItem = ({ item }: { item: any }) => (
         <TouchableOpacity
-            onPress={() => handleClickTopMovers(item.id)}
+            onPress={() => moveDetail(
+                item.circulating_supply,
+                item.name,
+                item.symbol,
+                item["quote"]["USD"]["price"],
+                item["quote"]["USD"]["percent_change_1h"],
+                item["quote"]["USD"]["percent_change_24h"],
+                item["quote"]["USD"]["percent_change_7d"],
+                item["quote"]["USD"]["percent_change_30d"],
+                item["quote"]["USD"]["percent_change_60d"],
+                item["quote"]["USD"]["percent_change_90d"],
+            )
+            }
             style={[styles.btnItem, { width: 138, height: 145 }]}>
             <View style={{ gap: 10 }}>
-                <Image source={item.img} />
+                <Image style={{ width: 40, height: 40 }} source={{ uri: url(item?.id) }} />
                 <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center', marginTop: 10 }}>
-                    <Text style={[styles.title, { fontSize: 16 }]}>{item.title}</Text>
-                    <Text style={[styles.text, { color: "#707070" }]}>{item.price}</Text>
+                    <Text style={[styles.title, { fontSize: 16 }]}>{item.symbol}</Text>
+                    <Text style={[styles.text, { color: "#707070" }]}>{formatNumberWithCommas(Number(item["quote"]["USD"]["price"]))}</Text>
                 </View>
-                <Text style={[styles.title, { color: '#3F845F' }]}>{item.percent}%</Text>
+                <Text style={[styles.title, { color: Number(item["quote"]["USD"]["percent_change_1h"]) > 0 ? '#3F845F' : "red" }]}>
+                    {Number(item["quote"]["USD"]["percent_change_1h"]) >= 0 ? "+" : ''}
+                    {formatNumberWithCommas(Number(item["quote"]["USD"]["percent_change_1h"]))}%
+                </Text>
             </View>
         </TouchableOpacity>
     );
     return (
         <FlatList
-        data={data}
-        renderItem={renderItem}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={item => item.id}
-        contentContainerStyle={{ gap: 10 }}
-    />
+            data={list}
+            renderItem={renderItem}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{ gap: 10 }}
+        />
     )
 }
 export default TopMovers

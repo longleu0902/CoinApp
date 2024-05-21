@@ -956,6 +956,7 @@ PODS:
   - BVLinearGradient (2.8.3):
     - React-Core
   - DoubleConversion (1.1.6)
+  - DVAssetLoaderDelegate (0.3.3)
   - FBLazyVector (0.73.6)
   - FBReactNativeSpec (0.73.6):
     - RCT-Folly (= 2022.05.16.00)
@@ -1026,6 +1027,7 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - GoogleAds-IMA-iOS-SDK (3.18.5)
   - GoogleDataTransport (9.4.1):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30911.0, >= 2.30908.0)
@@ -2038,6 +2040,19 @@ PODS:
     - React-debug
   - react-native-safe-area-context (4.9.0):
     - React-Core
+  - react-native-video (6.0.0):
+    - glog
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - react-native-video/Video (= 6.0.0)
+  - react-native-video/Video (6.0.0):
+    - DVAssetLoaderDelegate (~> 0.3.1)
+    - glog
+    - GoogleAds-IMA-iOS-SDK (~> 3.18.1)
+    - GoogleAds-IMA-tvOS-SDK (~> 4.2)
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
+    - SPTPersistentCache (~> 1.1.0)
   - React-nativeconfig (0.73.6)
   - React-NativeModulesApple (0.73.6):
     - glog
@@ -2251,6 +2266,7 @@ PODS:
   - RNSVG (15.2.0):
     - React-Core
   - SocketRocket (0.6.1)
+  - SPTPersistentCache (1.1.0)
   - VisionCamera (4.0.1):
     - VisionCamera/Core (= 4.0.1)
     - VisionCamera/React (= 4.0.1)
@@ -2298,6 +2314,7 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -2334,6 +2351,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - BoringSSL-GRPC
+    - DVAssetLoaderDelegate
     - Firebase
     - FirebaseAppCheckInterop
     - FirebaseAuth
@@ -2347,6 +2365,7 @@ SPEC REPOS:
     - FirebaseSharedSwift
     - FirebaseStorage
     - fmt
+    - GoogleAds-IMA-iOS-SDK
     - GoogleDataTransport
     - GoogleUtilities
     - "gRPC-C++"
@@ -2359,6 +2378,7 @@ SPEC REPOS:
     - PromisesObjC
     - RecaptchaInterop
     - SocketRocket
+    - SPTPersistentCache
 
 EXTERNAL SOURCES:
   boost:
@@ -2420,6 +2440,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -2489,6 +2511,7 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
+  DVAssetLoaderDelegate: 0caec20e4e08b8560b691131539e9180024d4bce
   FBLazyVector: f64d1e2ea739b4d8f7e4740cde18089cd97fe864
   FBReactNativeSpec: 9f2b8b243131565335437dba74923a8d3015e780
   Firebase: 91fefd38712feb9186ea8996af6cbdef41473442
@@ -2505,6 +2528,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: 03710f9a0e3824d3069ed1128601a3d3a5e7d817
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
+  GoogleAds-IMA-iOS-SDK: 7dbef0755db43698f2f6a3a7ac51a88571945399
   GoogleDataTransport: 6c09b596d841063d76d4288cc2d2f42cc36e1e2a
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
@@ -2538,6 +2562,7 @@ SPEC CHECKSUMS:
   React-logger: 3eb80a977f0d9669468ef641a5e1fabbc50a09ec
   React-Mapbuffer: d81d930c1b7f4db284e1d721fe7fdc99230ca108
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
+  react-native-video: 2b605880eaa3a734e93d151a303503f210825ee2
   React-nativeconfig: e700ac3ec3d66329076bd2c2787a204411815d43
   React-NativeModulesApple: f7fa541118d195ac850ca2ea460f338152ced167
   React-perflogger: 5f49905de275bac07ac7ea7f575a70611fa988f2
@@ -2569,9 +2594,10 @@ SPEC CHECKSUMS:
   RNScreens: a4d9ce8f68f833f4e42410140eafd88e38bba163
   RNSVG: 43b64ed39c14ce830d840903774154ca0c1f27ec
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  SPTPersistentCache: df36ea46762d7cf026502bbb86a8b79d0080dff4
   VisionCamera: 5787602f86d8521f17af0e606259b6d367754e74
   Yoga: 805bf71192903b20fc14babe48080582fee65a80
 
-PODFILE CHECKSUM: 64edf21f70d5bd29c988c0922f69056491f8b34b
+PODFILE CHECKSUM: 487d25b88899499cacad67e585a465bd60304b60
 
 COCOAPODS: 1.15.2

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-nati
 import { withTiming } from "react-native-reanimated";
 
 const Spend = (props: any) => {
-    const { translateY } = props
+    const { translateY  } = props
     const navigate = useNavigation<any>()
     const renderList = [
         {

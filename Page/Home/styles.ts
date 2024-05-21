@@ -47,6 +47,9 @@ const styles = StyleSheet.create({
         justifyContent : 'space-between',
         padding : 20,
         alignItems:'center'
+    },
+    loadding : {
+        flex : 1
     }
 })
 export default styles;

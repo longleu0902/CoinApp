@@ -1,7 +1,7 @@
 import { Text, TouchableOpacity, View, Image, useWindowDimensions } from "react-native";
 import styles from "../Nav/styles";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useNavigationState } from "@react-navigation/native";
 import { PanGestureHandler, GestureHandlerRootView, TextInput } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, withSpring, useAnimatedStyle, useAnimatedGestureHandler, withTiming, Easing } from 'react-native-reanimated';
 import Spend from "./Spend";
@@ -125,9 +125,28 @@ const Nav = () => {
         setLastPress(currentTime);
     }
 
+
+    //check location screen
+    const routes = useNavigationState(state => state.routes);
+    const currentRoute = routes[routes.length - 1].name;
+
     useEffect(() => {
-        handleClick(1)
-    }, []);
+        switch (currentRoute) {
+            case "Home":
+                handleClick(1);
+                break;
+            case "Portfolio":
+                handleClick(2);
+                break;
+            case "Prices":
+                handleClick(4);
+                break;
+            case "Settings":
+                handleClick(5);
+                break;
+
+        }
+    }, [currentRoute]);
 
     const { height } = useWindowDimensions()
     const gestureHandler = useAnimatedGestureHandler({
@@ -149,12 +168,14 @@ const Nav = () => {
             } else if (translateY.value > height || event.velocityY > -500) {
                 translateY.value = withTiming(700, { duration: 30 })
             }
-            // translateY.value = withTiming(0, { duration: 30 })
         },
     });
     const animatedStyles = useAnimatedStyle(() => ({
         transform: [{ translateY: withTiming(translateY.value, { duration: 250, easing: Easing.linear }) }],
     }));
+
+
+
 
     return (
         <>

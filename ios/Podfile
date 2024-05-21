@@ -34,6 +34,8 @@ target 'WeatherApp' do
   pod 'GoogleDataTransport', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true
   pod 'nanopb', :modular_headers => true
+  $RNVideoUseVideoCaching=true
+  $RNVideoUseGoogleIMA=true
   $RNFirebaseAsStaticFramework = true
 
 
